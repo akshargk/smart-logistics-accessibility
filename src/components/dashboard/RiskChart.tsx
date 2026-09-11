@@ -45,6 +45,9 @@ export default function RiskChart() {
         border: '1px solid var(--color-border)',
         borderRadius: 'var(--radius-lg)',
         overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
       }}
       role="region"
       aria-label="Risk and Weather Trends Chart"
@@ -52,11 +55,12 @@ export default function RiskChart() {
       {/* Header */}
       <div
         style={{
-          padding: '16px 20px 12px',
+          padding: '14px 20px 10px',
           borderBottom: '1px solid var(--color-border)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
+          flexShrink: 0,
         }}
       >
         <div>
@@ -67,7 +71,7 @@ export default function RiskChart() {
             <TrendingUp size={14} color="var(--color-accent-orange)" />
           </div>
           <p style={{ fontSize: 11, color: 'var(--color-text-muted)', marginTop: 2 }}>
-            Last 9 hours · Kerala Region
+            Last 9 hours · Assam / Brahmaputra Valley
           </p>
         </div>
         {/* Current risk score */}
@@ -170,6 +174,8 @@ export default function RiskChart() {
           gap: 1,
           background: 'var(--color-border)',
           borderTop: '1px solid var(--color-border)',
+          marginTop: 'auto',
+          flexShrink: 0,
         }}
       >
         {[
@@ -181,7 +187,7 @@ export default function RiskChart() {
             key={stat.label}
             style={{
               background: 'var(--color-bg-elevated)',
-              padding: '10px 16px',
+              padding: '12px 16px',
               textAlign: 'center',
             }}
           >
@@ -191,6 +197,37 @@ export default function RiskChart() {
             <div style={{ fontSize: 10, color: 'var(--color-text-muted)', marginTop: 2 }}>{stat.label}</div>
           </div>
         ))}
+      </div>
+
+      {/* Telemetry Status Footer */}
+      <div
+        style={{
+          padding: '8px 18px',
+          background: 'var(--color-bg-surface)',
+          borderTop: '1px solid var(--color-border)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          fontSize: 11,
+          color: 'var(--color-text-muted)',
+          flexShrink: 0,
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <span
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: '50%',
+              background: 'var(--color-accent-green)',
+              display: 'inline-block',
+            }}
+          />
+          <span>Doppler AWS Stream · Kamrup &amp; Lower Assam Basin</span>
+        </div>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--color-text-secondary)', fontWeight: 600 }}>
+          LIVE TELEMETRY
+        </span>
       </div>
     </motion.div>
   )

@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: smartlogix-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: APP_ENV
+        value: production
+      - key: DEMO_MODE
+        value: "true"
+      - key: CORS_ORIGINS
+        value: "https://*.vercel.app,http://localhost:5173"
+      - key: MONGODB_URL
+        sync: false
+      - key: MONGODB_DATABASE
+        value: smartlogix

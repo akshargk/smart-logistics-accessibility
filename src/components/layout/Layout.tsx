@@ -4,6 +4,7 @@ import Navbar from './Navbar'
 
 export default function Layout() {
   const location = useLocation()
+  const isLanding = location.pathname === '/'
 
   return (
     <div
@@ -11,23 +12,27 @@ export default function Layout() {
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        background: 'var(--color-bg-base)',
+        background: isLanding ? '#060d17' : 'var(--color-bg-base)',
+        overflowX: 'hidden',
+        width: '100%',
       }}
     >
       <Navbar />
       <AnimatePresence mode="wait">
         <motion.main
           key={location.pathname}
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: isLanding ? 0 : 12 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
+          exit={{ opacity: 0, y: isLanding ? 0 : -8 }}
           transition={{ duration: 0.25, ease: 'easeOut' }}
           style={{
             flex: 1,
-            maxWidth: 1600,
+            maxWidth: isLanding ? '100%' : 1600,
             width: '100%',
-            margin: '0 auto',
-            padding: '24px 20px 32px',
+            margin: isLanding ? 0 : '0 auto',
+            padding: isLanding ? 0 : '76px 20px 32px',
+            position: 'relative',
+            zIndex: 1,
           }}
         >
           <Outlet />

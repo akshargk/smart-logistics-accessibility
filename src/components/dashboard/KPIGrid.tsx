@@ -1,46 +1,48 @@
-import { Bell, Route, Truck, AlertTriangle } from 'lucide-react'
-import KPICard from './KPICard'
-import { kpiData } from '../../data/mockData'
+import { Bell, ShieldCheck, Truck, AlertTriangle } from 'lucide-react'
+import { BklitMetricCard } from '../ui/bklit-metric'
+import { useLanguage } from '../../context/LanguageContext'
 
 export default function KPIGrid() {
+  const { t } = useLanguage()
+
   const cards = [
     {
       icon: <Bell size={18} strokeWidth={2} />,
-      label: 'Active Alerts',
-      value: kpiData.activeAlerts.value,
-      delta: kpiData.activeAlerts.delta,
-      deltaLabel: kpiData.activeAlerts.deltaLabel,
-      trend: kpiData.activeAlerts.trend,
+      label: t('kpi.activeAlerts') || 'Active Alerts',
+      value: 14,
+      delta: 4,
+      deltaLabel: t('kpi.inLastHour') || 'in last hour',
+      trend: 'up' as const,
       accentColor: 'var(--color-accent-red)',
       accentDim: 'var(--color-accent-red-dim)',
     },
     {
-      icon: <Route size={18} strokeWidth={2} />,
-      label: 'Safe Routes',
-      value: kpiData.safeRoutes.value,
-      delta: kpiData.safeRoutes.delta,
-      deltaLabel: kpiData.safeRoutes.deltaLabel,
-      trend: kpiData.safeRoutes.trend,
+      icon: <ShieldCheck size={18} strokeWidth={2} />,
+      label: t('kpi.safeShelters') || 'Safe Shelters',
+      value: 52,
+      delta: 8,
+      deltaLabel: t('kpi.activeInGrid') || 'active in grid',
+      trend: 'up' as const,
       accentColor: 'var(--color-accent-green)',
       accentDim: 'var(--color-accent-green-dim)',
     },
     {
       icon: <Truck size={18} strokeWidth={2} />,
-      label: 'Vehicles / People',
-      value: kpiData.vehiclesMonitored.value,
-      delta: kpiData.vehiclesMonitored.delta,
-      deltaLabel: kpiData.vehiclesMonitored.deltaLabel,
-      trend: kpiData.vehiclesMonitored.trend,
+      label: t('kpi.evacueesAssisted') || 'Evacuees Assisted',
+      value: 148,
+      delta: 8.2,
+      deltaLabel: t('kpi.liveTriageLogs') || 'live triage logs',
+      trend: 'up' as const,
       accentColor: 'var(--color-accent-blue)',
       accentDim: 'var(--color-accent-blue-dim)',
     },
     {
       icon: <AlertTriangle size={18} strokeWidth={2} />,
-      label: 'High-Risk Zones',
-      value: kpiData.highRiskZones.value,
-      delta: kpiData.highRiskZones.delta,
-      deltaLabel: kpiData.highRiskZones.deltaLabel,
-      trend: kpiData.highRiskZones.trend,
+      label: t('kpi.highRiskZones') || 'High-Risk Zones',
+      value: 9,
+      delta: 3,
+      deltaLabel: t('kpi.activeHazards') || 'active hazards',
+      trend: 'up' as const,
       accentColor: 'var(--color-accent-orange)',
       accentDim: 'var(--color-accent-orange-dim)',
     },
@@ -58,7 +60,7 @@ export default function KPIGrid() {
       aria-label="Key performance indicators"
     >
       {cards.map((card, i) => (
-        <KPICard key={card.label} {...card} index={i} />
+        <BklitMetricCard key={card.label} {...card} index={i} />
       ))}
     </div>
   )

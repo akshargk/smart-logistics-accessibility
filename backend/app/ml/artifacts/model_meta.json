@@ -1,0 +1,38 @@
+{
+  "model_type": "Pipeline(StandardScaler -> RandomForestRegressor)",
+  "framework": "scikit-learn",
+  "dataset_notice": "Calibrated Synthetic Northeast India Exposure Dataset (1,500 samples). Not real historical loss data.",
+  "cv_5fold_mae_mean": 4.03,
+  "cv_5fold_mae_std": 0.25,
+  "test_mae": 4.1,
+  "test_rmse": 5.33,
+  "test_r2": 0.8895,
+  "baseline_comparison": {
+    "dummy_mean_mae": 12.26,
+    "ridge_mae": 5.83,
+    "rf_mae": 4.1,
+    "mae_reduction_vs_baseline_pct": 66.5
+  },
+  "feature_importances": {
+    "hazard_radius_ratio": 0.5565,
+    "hazard_severity_weight": 0.251,
+    "overlapping_hazards_count": 0.1279,
+    "route_transit_km": 0.0338,
+    "rainfall_mm_per_hr": 0.0208,
+    "min_hazard_dist_km": 0.0051,
+    "shelter_occupancy_ratio": 0.0038,
+    "wind_speed_kmh": 0.0006,
+    "terrain_vulnerability_index": 0.0006
+  },
+  "feature_names": [
+    "min_hazard_dist_km",
+    "hazard_radius_ratio",
+    "hazard_severity_weight",
+    "overlapping_hazards_count",
+    "rainfall_mm_per_hr",
+    "wind_speed_kmh",
+    "terrain_vulnerability_index",
+    "route_transit_km",
+    "shelter_occupancy_ratio"
+  ]
+}
