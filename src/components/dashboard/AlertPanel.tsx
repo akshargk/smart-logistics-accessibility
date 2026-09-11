@@ -110,8 +110,9 @@ export default function AlertPanel() {
           </div>
         </div>
         <motion.button
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
+          whileHover={{ y: -1, scale: 1.015, filter: 'brightness(1.08)' }}
+          whileTap={{ scale: 0.98 }}
+          transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
           style={{
             padding: '5px 12px',
             borderRadius: 7,
@@ -155,6 +156,8 @@ export default function AlertPanel() {
                 key={alert.id}
                 variants={alertVariants}
                 layout
+                whileHover={{ x: 2, scale: 1.006, boxShadow: '0 4px 16px -2px rgba(0,0,0,0.3)' }}
+                transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   background: colors.bg,
                   border: `1px solid ${colors.border}`,

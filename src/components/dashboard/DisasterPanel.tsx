@@ -61,7 +61,8 @@ export default function DisasterPanel() {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
-        minHeight: 480,
+        height: '100%',
+        minHeight: 540,
       }}
       role="region"
       aria-label="Active Disasters Panel"
@@ -69,12 +70,13 @@ export default function DisasterPanel() {
       {/* Header */}
       <div
         style={{
-          padding: '16px 18px 12px',
+          padding: '12px 16px 10px',
           borderBottom: '1px solid var(--color-border)',
           background: 'var(--color-bg-elevated)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
+          flexShrink: 0,
         }}
       >
         <div>
@@ -95,6 +97,7 @@ export default function DisasterPanel() {
         animate="visible"
         style={{
           flex: 1,
+          minHeight: 0,
           overflowY: 'auto',
           padding: '10px 14px',
           display: 'flex',
@@ -114,7 +117,8 @@ export default function DisasterPanel() {
                 key={disaster.id}
                 variants={itemVariants}
                 layout
-                whileHover={{ x: 2 }}
+                whileHover={{ x: 2, scale: 1.006, boxShadow: '0 4px 16px -2px rgba(0,0,0,0.3)' }}
+                transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   background: isHighRisk ? 'rgba(239, 68, 68, 0.04)' : 'var(--color-bg-elevated)',
                   border: `1px solid ${riskBorderColors[disaster.severity]}`,

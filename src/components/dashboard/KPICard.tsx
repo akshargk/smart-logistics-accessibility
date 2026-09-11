@@ -30,10 +30,15 @@ export default function KPICard({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.08, type: 'spring', stiffness: 280, damping: 26 }}
-      whileHover={{ y: -2, boxShadow: '0 6px 24px rgba(0,0,0,0.3)' }}
+      transition={{
+        opacity: { delay: index * 0.05, duration: 0.3, ease: 'easeOut' },
+        y: { duration: 0.2, ease: [0.16, 1, 0.3, 1] },
+        scale: { duration: 0.2, ease: [0.16, 1, 0.3, 1] },
+        boxShadow: { duration: 0.2, ease: [0.16, 1, 0.3, 1] },
+      }}
+      whileHover={{ y: -3, scale: 1.008, boxShadow: '0 8px 24px -4px rgba(0,0,0,0.45)' }}
       style={{
         background: 'var(--color-bg-surface)',
         border: '1px solid var(--color-border)',

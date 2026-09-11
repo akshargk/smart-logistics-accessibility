@@ -23,6 +23,8 @@ export default function SafeRoute() {
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
+        height: 'auto',
+        minHeight: 0,
       }}
       role="region"
       aria-label="Safe Route Information"
@@ -30,12 +32,13 @@ export default function SafeRoute() {
       {/* Header */}
       <div
         style={{
-          padding: '16px 18px 12px',
+          padding: '12px 16px 10px',
           borderBottom: '1px solid var(--color-border)',
           background: 'var(--color-bg-elevated)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
+          flexShrink: 0,
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -66,9 +69,9 @@ export default function SafeRoute() {
       </div>
 
       {/* Route visualization */}
-      <div style={{ padding: '20px 18px', flex: 1 }}>
+      <div style={{ padding: '14px 16px', flex: 1 }}>
         {/* From → To */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 0, marginBottom: 20 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 0, marginBottom: 12 }}>
           {/* Origin */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <div
@@ -187,7 +190,7 @@ export default function SafeRoute() {
             borderRadius: 8,
             background: statusConfig[primaryRoute.status].bg,
             border: `1px solid ${primaryRoute.status === 'SAFE' ? 'var(--color-accent-green-border)' : 'var(--color-border)'}`,
-            marginBottom: 16,
+            marginBottom: 12,
           }}
         >
           {(() => {
@@ -210,11 +213,11 @@ export default function SafeRoute() {
         </div>
 
         {/* All routes */}
-        <div style={{ marginBottom: 16 }}>
-          <div style={{ fontSize: 10, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 8 }}>
+        <div style={{ marginBottom: 12 }}>
+          <div style={{ fontSize: 10, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 6 }}>
             All Active Routes
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
             {routes.map((route, i) => (
               <motion.div
                 key={route.id}
@@ -225,7 +228,7 @@ export default function SafeRoute() {
                   display: 'flex',
                   alignItems: 'center',
                   gap: 8,
-                  padding: '6px 10px',
+                  padding: '5px 10px',
                   borderRadius: 7,
                   background: 'var(--color-bg-elevated)',
                   border: '1px solid var(--color-border)',
@@ -254,11 +257,19 @@ export default function SafeRoute() {
 
         {/* CTA */}
         <motion.button
-          whileHover={{ scale: 1.02, background: '#2563EB' }}
-          whileTap={{ scale: 0.97 }}
+          whileHover={{ y: -1, scale: 1.012, background: '#2563EB', boxShadow: '0 4px 16px rgba(37, 99, 235, 0.4)' }}
+          whileTap={{ scale: 0.985 }}
+          transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+          onClick={() => {
+            const mapEl = document.querySelector('.leaflet-container')
+            if (mapEl) {
+              mapEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            }
+            window.dispatchEvent(new CustomEvent('smartlogix:focus-route', { detail: { routeId: 'r-nh6' } }))
+          }}
           style={{
             width: '100%',
-            padding: '11px 16px',
+            padding: '10px 14px',
             borderRadius: 9,
             background: 'var(--color-accent-blue)',
             border: 'none',
