@@ -78,7 +78,7 @@ async def generate_route_async(
 
     # Concurrently query OSRM for all top candidate shelters with shared AsyncClient
     import httpx
-    async with httpx.AsyncClient(timeout=4.5, headers={"User-Agent": "SmartLogix-Disaster-Logistics/1.0"}) as client:
+    async with httpx.AsyncClient(timeout=2.5, headers={"User-Agent": "SmartLogix-Disaster-Logistics/1.0"}) as client:
         osrm_tasks = [
             fetch_osrm_road_route_async(
                 user_lat, user_lon, shelter.latitude, shelter.longitude,
@@ -104,8 +104,8 @@ async def generate_route_async(
     # Fallback safety: ensure we always evaluate at least 3 road candidates
     while len(raw_road_candidates) < 3:
         target_shelter = shelters_with_dist[min(len(raw_road_candidates), len(shelters_with_dist) - 1)][0]
-        fb_routes = fetch_osrm_road_route(
-            user_lat, user_lon, target_shelter.latitude, target_shelter.longitude, request_alternatives=False
+        fb_routes = await fetch_osrm_road_route_async(
+            user_lat, user_lon, target_shelter.latitude, target_shelter.longitude, request_alternatives=False, timeout_sec=2.0
         )
         raw_road_candidates.append((target_shelter, fb_routes[0], f"Route {chr(65 + len(raw_road_candidates))} (Road Corridor)"))
 
