@@ -15,7 +15,7 @@ from fastapi.responses import JSONResponse
 from app.config import settings
 from app.database import init_db, AsyncSessionLocal
 from app.seed import seed_demo_data
-from app.routers import health, events, risk, alerts, routes, demo, mongo_admin
+from app.routers import health, events, risk, alerts, routes, demo, mongo_admin, data_ingestion
 
 # ── Logging ───────────────────────────────────────────────────
 logging.basicConfig(
@@ -55,6 +55,8 @@ async def lifespan(app: FastAPI):
     yield
 
     logger.info("Shutting down...")
+    from app.ingestion.service import DataIngestionService
+    await DataIngestionService.get_instance().close()
 
 
 # ── Application ───────────────────────────────────────────────
@@ -109,6 +111,7 @@ app.include_router(alerts.router)
 app.include_router(routes.router)
 app.include_router(demo.router)
 app.include_router(mongo_admin.router)
+app.include_router(data_ingestion.router)
 
 
 # ── Root ──────────────────────────────────────────────────────

@@ -39,12 +39,27 @@ async def get_safe_route(
     event_result = await db.execute(event_stmt)
     active_events = list(event_result.scalars().all())
 
+    # Ingest candidate weather telemetry if available (cached / resilient)
+    rainfall_mm = None
+    wind_speed_kmh = None
+    try:
+        from app.ingestion.service import DataIngestionService
+        weather = await DataIngestionService.get_instance().get_weather(
+            payload.latitude, payload.longitude
+        )
+        rainfall_mm = max(weather.precipitation_mm_per_hr, weather.rain_mm_per_hr)
+        wind_speed_kmh = weather.wind_speed_kmh
+    except Exception:
+        pass
+
     return await generate_route_async(
         payload.latitude,
         payload.longitude,
         safe_locs,
         active_events,
         prefer_accessible=payload.prefer_accessible,
+        rainfall_mm=rainfall_mm,
+        wind_speed_kmh=wind_speed_kmh,
     )
 
 

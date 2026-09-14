@@ -38,7 +38,27 @@ async def analyse_location_risk(
     result = await db.execute(stmt)
     active_events = result.scalars().all()
 
-    return analyse_risk(payload.latitude, payload.longitude, list(active_events))
+    resp = analyse_risk(payload.latitude, payload.longitude, list(active_events))
+
+    if payload.include_weather:
+        try:
+            from app.ingestion.service import DataIngestionService
+            from app.schemas import RiskFactorDetail
+            weather = await DataIngestionService.get_instance().get_weather(
+                payload.latitude, payload.longitude
+            )
+            if weather.precipitation_mm_per_hr > 5.0 or weather.wind_speed_kmh > 40.0:
+                resp.factors.append(
+                    RiskFactorDetail(
+                        factor=f"Live Weather ({weather.source})",
+                        contribution=round(min(20.0, weather.precipitation_mm_per_hr * 0.5), 1),
+                        description=f"{weather.weather_condition}: {weather.precipitation_mm_per_hr} mm/h rain, {weather.wind_speed_kmh} km/h wind.",
+                    )
+                )
+        except Exception:
+            pass
+
+    return resp
 
 
 @router.get("/zones", summary="List all active risk zones")
